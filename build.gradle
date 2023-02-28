@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'antlr'
+}
+
+group 'org.compilers.software.nju'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    antlr 'org.antlr:antlr4:4.11.1'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation("com.google.guava:guava:31.1-jre")
+    implementation group: 'org.testng', name: 'testng', version: '[6.11]'
+}
+
+// ['-package', 'list']
+// "-long-messages"
+// "-atn"
+// "-Werror"
+generateGrammarSource {
+    arguments += ["-Xlog", "-visitor"]
+}
+
+test {
+    useJUnitPlatform()
+}
