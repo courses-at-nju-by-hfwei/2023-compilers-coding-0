@@ -1,24 +1,10 @@
-grammar SimpleExpr;
-import SimpleExprLexerRules;
+lexer grammar SimpleExprLexerRules;
 
-@header {
-package simpleexpr;
-}
-
-prog : stat* EOF ;
-
-stat : expr ';'
-     | ID '=' expr ';'
-     | 'if' expr ';'
-     ;
-
-expr : expr ('*' | '/') expr
-     | expr ('+' | '-') expr
-     | '(' expr ')'
-     | ID
-     | INT
-     | FLOAT
-     ;
+// Comment out the following lines
+// Otherwise, there will be duplicate package statements in the genearted files
+// @header {
+// package simpleexpr;
+// }
 
 SEMI : ';' ;
 ASSIGN : '=' ;

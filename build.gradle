@@ -12,9 +12,9 @@ repositories {
 
 dependencies {
     antlr 'org.antlr:antlr4:4.11.1'
+    implementation group: 'org.testng', name: 'testng', version: '[6.11]'
     implementation 'org.apache.commons:commons-lang3:3.0'
     implementation("com.google.guava:guava:31.1-jre")
-    implementation group: 'org.testng', name: 'testng', version: '[6.11]'
 }
 
 // ['-package', 'list']
@@ -23,8 +23,12 @@ dependencies {
 // "-Werror"
 generateGrammarSource {
     arguments += ["-Xlog", "-visitor"]
+    // see https://discuss.gradle.org/t/using-gradle-2-10s-antlr-plugin-to-import-an-antlr-4-lexer-grammar-into-another-grammar/14970/8
+    arguments << "-lib" << "src/main/antlr/simpleexpr"
 }
 
 test {
-    useJUnitPlatform()
+    useTestNG() {
+        useDefaultListeners = true
+    }
 }
