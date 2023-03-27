@@ -25,6 +25,7 @@ public class Graph {
         .append("  edge [arrowsize = 0.5]\n")
         .append("  node [shape = circle, fontname = \"ArialNarrow\", fontsize = 12, fixedsize = true, height = 0.45];\n");
 
+    buf.append("  ");
     nodes.forEach(node -> buf.append(node).append("; "));
     buf.append("\n");
 
