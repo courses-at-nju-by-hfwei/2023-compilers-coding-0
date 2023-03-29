@@ -11,10 +11,6 @@ import cymbol.CymbolParser;
 public class CalcListener extends CymbolBaseListener {
   private final ParseTreeProperty<Integer> values = new ParseTreeProperty<>();
 
-  public ParseTreeProperty<Integer> getValues() {
-    return values;
-  }
-
   @Override
   public void exitExprStat(CymbolParser.ExprStatContext ctx) {
     System.out.println(ctx.expr().getText() + " = " + values.get(ctx.expr()));
