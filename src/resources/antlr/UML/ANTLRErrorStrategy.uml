@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>cymbol.CymbolLexer</OriginalElement>
+  <nodes>
+    <node x="-113.0" y="155.0">org.antlr.v4.runtime.BailErrorStrategy</node>
+    <node x="-127.5" y="-19.0">org.antlr.v4.runtime.ANTLRErrorStrategy</node>
+    <node x="-130.0" y="68.0">org.antlr.v4.runtime.DefaultErrorStrategy</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.antlr.v4.runtime.DefaultErrorStrategy" target="org.antlr.v4.runtime.ANTLRErrorStrategy" relationship="REALIZATION">
+      <point x="0.0" y="-18.5" />
+      <point x="0.0" y="18.5" />
+    </edge>
+    <edge source="org.antlr.v4.runtime.BailErrorStrategy" target="org.antlr.v4.runtime.DefaultErrorStrategy" relationship="GENERALIZATION">
+      <point x="0.0" y="-18.5" />
+      <point x="0.0" y="18.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.5" showDependencies="false" x="10.0" y="96.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
