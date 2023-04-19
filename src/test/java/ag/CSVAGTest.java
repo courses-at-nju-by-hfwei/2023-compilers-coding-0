@@ -1,4 +1,4 @@
-package error;
+package ag;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -13,15 +13,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-import parser.allstar.error.ClassLexer;
-import parser.allstar.error.ClassParser;
-
-public class ClassTest {
+public class CSVAGTest {
   InputStream is = System.in;
 
   @BeforeMethod
   public void setUp() throws IOException {
-    is = new FileInputStream(Path.of("src/main/antlr/parser.allstar/error/Class-Subrule-Start.txt").toFile());
+    is = new FileInputStream(Path.of("src/test/antlr/ag/csv.txt").toFile());
   }
 
   @AfterMethod
@@ -29,12 +26,12 @@ public class ClassTest {
   }
 
   @Test
-  public void testGetAllTokens() throws IOException {
+  public void testCSVAG() throws IOException {
     CharStream input = CharStreams.fromStream(is);
-    ClassLexer lexer = new ClassLexer(input);
+    CSVAGLexer lexer = new CSVAGLexer(input);
     CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-    ClassParser parser = new ClassParser(tokens);
-    ParseTree tree = parser.prog();
+    CSVAGParser parser = new CSVAGParser(tokens);
+    ParseTree tree = parser.file();
   }
 }
