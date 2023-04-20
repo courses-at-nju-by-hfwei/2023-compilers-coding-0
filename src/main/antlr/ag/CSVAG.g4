@@ -7,43 +7,22 @@ import java.util.*;
 
 file
 locals [int i = 0]
-    : hdr ( rows += row[$hdr.text.split(",")] { $i++; })+ {
-            System.out.println("Totally " + $i + " rows");
-            for (RowContext r : $rows) {
-                System.out.println("Row token interval : " + r.getSourceInterval());
-            }
-        }
-    ;
-
-hdr : row[null] {
-        System.out.println("header: " + $text.trim());
+  : hdr
+    { System.out.println("header: " + $hdr.text); }
+    (rs += row[$hdr.text.split(",")] { $i++; System.out.println($row.vals); } )+
+    { System.out.println("Totally " + $i + " rows");
+      for (RowContext r : $rs) {
+        System.out.println("Row token interval: " + r.getSourceInterval());
+      }
     };
-
-row[String[] columns] returns [Map<String, String> values]
-locals [int col = 0]
-@init {
-    $values = new LinkedHashMap<>();
-}
-@after {
-    if ($values.size() > 0) {
-        System.out.println("values = " + $values);
-    }
-}
-    : field {
-        if ($columns != null) {
-            $values.put($columns[$col++].trim(), $field.text.trim());
-        }
-    } (',' field
-        {
-            if ($columns != null) {
-                $values.put($columns[$col++].trim(), $field.text.trim());
-            }
-        }
-    )* '\r'? '\n'
-    ;
+hdr : row[null] ;
+row[String[] columns] returns [Map<String, String> vals = new HashMap<String, String>()]
+  locals [int col = 0]
+    : field { if ($columns != null) $vals.put(columns[$col++], $field.text); }
+      (',' field { if ($columns != null) $vals.put(columns[$col++], $field.text); } )* ;
 
 field : ID | NUMBER ;
 
 ID : [a-z]+ ;
 NUMBER : [0-9]+ ;
-WS : [ \t]+ -> skip;
+WS : [ \t\r\n]+ -> skip;

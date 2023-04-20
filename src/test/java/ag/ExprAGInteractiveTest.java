@@ -1,6 +1,5 @@
 package ag;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -10,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class ExprAGMain {
+public class ExprAGInteractiveTest {
   public static void main(String[] args) throws IOException {
     InputStream is = System.in;
     BufferedReader br = new BufferedReader(new InputStreamReader(is));

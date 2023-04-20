@@ -7,7 +7,7 @@ package ag;
 
 file : hdr row+ ;
 hdr : row ;
-row : field (',' field)* '\r'? '\n' ;
+row : field (',' field)* ;
 
 field : ID | NUMBER ;
 

@@ -1,9 +1,10 @@
-package ag;
+package ag.type;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -13,25 +14,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-public class CSVAGTest {
+public class TypeCheckingListenerTest {
   InputStream is = System.in;
 
   @BeforeMethod
   public void setUp() throws IOException {
-    is = new FileInputStream(Path.of("src/test/antlr/ag/csv.txt").toFile());
+    is = new FileInputStream(Path.of("src/test/antlr/ag/type/array.txt").toFile());
   }
-
-  @AfterMethod
-  public void tearDown() {
-  }
-
   @Test
-  public void testCSVAG() throws IOException {
+  public void testTypeChecking() throws IOException {
     CharStream input = CharStreams.fromStream(is);
-    CSVAGLexer lexer = new CSVAGLexer(input);
+    ArrayLexer lexer = new ArrayLexer(input);
     CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-    CSVAGParser parser = new CSVAGParser(tokens);
-    parser.file();
+    ArrayParser parser = new ArrayParser(tokens);
+    ParseTree tree = parser.prog();
+
+    ParseTreeWalker walker = new ParseTreeWalker();
+    TypeCheckingListener typeCheckingListener = new TypeCheckingListener();
+    walker.walk(typeCheckingListener, tree);
   }
 }

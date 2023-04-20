@@ -10,13 +10,12 @@ stat : expr
      | ID '=' expr
      ;
 
-expr returns [int val]
-    : left = expr op = ('*' | '/') right = expr
-    | left = expr op = ('+' | '-') right = expr
-    | '(' expr ')'
-    | ID
-    | INT
-    ;
+expr : l = expr op = ('*' | '/') r = expr
+     | l = expr op = ('+' | '-') r = expr
+     | '(' expr ')'
+     | ID
+     | INT
+     ;
 
 ADD : '+' ;
 SUB : '-' ;

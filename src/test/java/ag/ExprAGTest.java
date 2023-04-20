@@ -21,10 +21,6 @@ public class ExprAGTest {
     is = new FileInputStream(Path.of("src/test/antlr/ag/expr.txt").toFile());
   }
 
-  @AfterMethod
-  public void tearDown() {
-  }
-
   @Test
   public void testExprAG() throws IOException {
     CharStream input = CharStreams.fromStream(is);
@@ -32,6 +28,6 @@ public class ExprAGTest {
     CommonTokenStream tokens = new CommonTokenStream(lexer);
 
     ExprAGParser parser = new ExprAGParser(tokens);
-    ParseTree tree = parser.prog();
+    parser.prog();
   }
 }

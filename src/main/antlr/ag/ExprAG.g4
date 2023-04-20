@@ -26,11 +26,11 @@ stat : expr         { System.out.println($expr.val); }
      ;
 
 expr returns [int val]
-    : left = expr op = ('*' | '/') right = expr { $val = eval($left.val, $right.val, $op.type); }
-    | left = expr op = ('+' | '-') right = expr { $val = eval($left.val, $right.val, $op.type); }
-    | '(' expr ')'                              { $val = $expr.val; }
-    | ID                                        { $val = memory.getOrDefault($ID.text, 0); }
-    | INT                                       { $val = $INT.int; }
+    : l = expr op = ('*' | '/') r = expr { $val = eval($l.val, $r.val, $op.type); }
+    | l = expr op = ('+' | '-') r = expr { $val = eval($l.val, $r.val, $op.type); }
+    | '(' expr ')'                       { $val = $expr.val; }
+    | ID                                 { $val = memory.getOrDefault($ID.text, 0); }
+    | INT                                { $val = $INT.int; }
     ;
 
 ADD : '+' ;
