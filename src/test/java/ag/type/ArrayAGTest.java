@@ -1,4 +1,4 @@
-package ag;
+package ag.type;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -11,21 +11,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-public class PostfixExprAGTest {
+public class ArrayAGTest {
   InputStream is = System.in;
 
   @BeforeMethod
   public void setUp() throws IOException {
-    is = new FileInputStream(Path.of("src/test/antlr/ag/postfix.txt").toFile());
+    is = new FileInputStream(Path.of("src/test/antlr/ag/type/array.txt").toFile());
   }
-
   @Test
-  public void testPostfixExprAG() throws IOException {
+  public void testArrayAG() throws IOException {
     CharStream input = CharStreams.fromStream(is);
-    PostfixExprAGLexer lexer = new PostfixExprAGLexer(input);
+    ArrayAGLexer lexer = new ArrayAGLexer(input);
     CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-    PostfixExprAGParser parser = new PostfixExprAGParser(tokens);
-    parser.stat();
+    ArrayAGParser parser = new ArrayAGParser(tokens);
+    parser.prog();
   }
 }

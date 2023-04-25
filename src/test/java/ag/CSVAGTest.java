@@ -21,10 +21,6 @@ public class CSVAGTest {
     is = new FileInputStream(Path.of("src/test/antlr/ag/csv.txt").toFile());
   }
 
-  @AfterMethod
-  public void tearDown() {
-  }
-
   @Test
   public void testCSVAG() throws IOException {
     CharStream input = CharStreams.fromStream(is);

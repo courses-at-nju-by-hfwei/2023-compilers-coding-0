@@ -2,55 +2,53 @@ grammar ArrayAG;
 
 @header {
 package ag.type;
+import java.util.*;
+}
+
+@parser::members {
+private Map<String, String> typeMap = new HashMap<>();
 }
 
 prog : stat* EOF ;
 
-stat : varDecl                              # VarDeclStat
-     | arrDecl                              # ArrDeclStat
-     | lhs = expr '=' rhs = expr ';'                    # AssignStat
+stat : varDecl
+        { String id = $varDecl.ctx.ID().getText();
+          System.out.println(id + " : " + typeMap.get(id)); }
+     | arrDecl
+        { String id = $arrDecl.ctx.ID().getText();
+          System.out.println(id + " : " + typeMap.get(id)); }
+     | lhs = expr '=' rhs = expr ';'
+        {  System.out.println($lhs.type + " <=> " + $rhs.type); }
      ;
 
-varDecl : type ID ';' ;
+varDecl : basicType ID ';'
+    { typeMap.put($ID.text, $basicType.text); };
+basicType : 'int' | 'float' ;
 
-// array declaration (without initialization); added 2022-12-06
 // OR: type ID ('[' INT ']')* ';'
-arrDecl : type ID arrayType ';' ;
-arrayType : '[' INT ']' arrayType # NonEmptyArrayType
-          |                       # EmptyArrayType
-          ;   // added 2022-12-06
+arrDecl : basicType ID arrayType[$basicType.text]
+  { typeMap.put($ID.text, $arrayType.array_type); }
+  ';' ;
+arrayType[String basic_type]
+    returns [String array_type]
+  : '[' INT ']' arrayType[$basic_type]
+     { $array_type = "(" + $INT.int + ", " + $arrayType.array_type + ")"; }
+  |  { $array_type = $basic_type; }
+  ;
 
-type : 'int' | 'double' | 'void' ;
-
-expr: primary = expr '[' index = expr ']'       # ArrayIndex // array subscripts
-    | lhs = expr (op = '*'| op = '/') rhs = expr     # MultDiv
-    | lhs = expr (op = '+'| op = '-') rhs = expr     # AddSub
-    | lhs = expr (op = '==' | op = '!=') rhs = expr  # EQNE
-    | ID                      # Id
-    | INT                     # Int
+expr returns [String type]
+    : ID { String expr_type = typeMap.get($ID.text); }
+      ('[' INT ']'
+         {
+           int start = expr_type.indexOf(',');
+           int end = expr_type.lastIndexOf(')');
+           expr_type = expr_type.substring(start + 1, end);
+         }
+      )* { $type = expr_type; }
+    | ID { $type = typeMap.get($ID.text); }
+    | INT { $type = "int"; }
     ;
-////////////////////////////////////////////
-// You can use "Alt + Insert" to automatically generate
-// the following lexer rules for literals in the grammar above.
-// Remember to check and modify them if necessary.
 
-SEMI : ';' ;
-LBRACK : '[' ;
-RBRACK : ']' ;
-
-INTTYPE : 'int' ;
-DOUBLETYPE : 'double' ;
-VOIDTYPE : 'void' ;
-
-ADD : '+' ;
-SUB : '-' ;
-MUL : '*' ;
-DIV : '/' ;
-
-ASSIGN : '=' ;
-NE : '!=' ;
-EE : '==' ;
-////////////////////////////////////////////
 ID : [a-z]+ ;
 INT : [0-9]+ ;
 WS : [ \t\n\r]+ -> skip ;

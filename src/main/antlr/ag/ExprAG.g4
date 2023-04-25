@@ -21,17 +21,17 @@ import java.util.*;
 
 prog : stat+ ;
 
-stat : expr         { System.out.println($expr.val); }
+stat : expr     { System.out.println($expr.val); }
      | ID '=' expr  { memory.put($ID.text, $expr.val); }
      ;
 
 expr returns [int val]
-    : l = expr op = ('*' | '/') r = expr { $val = eval($l.val, $r.val, $op.type); }
-    | l = expr op = ('+' | '-') r = expr { $val = eval($l.val, $r.val, $op.type); }
-    | '(' expr ')'                       { $val = $expr.val; }
-    | ID                                 { $val = memory.getOrDefault($ID.text, 0); }
-    | INT                                { $val = $INT.int; }
-    ;
+: l = expr op = ('*' | '/') r = expr { $val = eval($l.val, $r.val, $op.type); }
+     | l = expr op = ('+' | '-') r = expr { $val = eval($l.val, $r.val, $op.type); }
+     | '(' expr ')'                  { $val = $expr.val; }
+     | ID                            { $val = memory.getOrDefault($ID.text, 0); }
+     | INT                           { $val = $INT.int; }
+     ;
 
 ADD : '+' ;
 SUB : '-' ;

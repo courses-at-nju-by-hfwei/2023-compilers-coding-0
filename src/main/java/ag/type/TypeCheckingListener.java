@@ -19,7 +19,7 @@ public class TypeCheckingListener extends ArrayBaseListener {
    */
   @Override
   public void enterArrDecl(ArrayParser.ArrDeclContext ctx) {
-    String typeName = ctx.type().getText();
+    String typeName = ctx.basicType().getText();
     Type basicType = new BasicTypeSymbol(typeName);
     basicTypeProperty.put(ctx, basicType);
   }
@@ -63,26 +63,26 @@ public class TypeCheckingListener extends ArrayBaseListener {
 
   @Override
   public void exitArrDeclStat(ArrayParser.ArrDeclStatContext ctx) {
-    System.out.println("ArrayType : " + arrayTypeProperty.get(ctx.arrDecl()));
+    System.out.println(ctx.arrDecl().ID().getText() + " : " + arrayTypeProperty.get(ctx.arrDecl()));
   }
 
   /**
    * Below: type reference and inference
    */
   @Override
-  public void exitId(ArrayParser.IdContext ctx) {
+  public void exitIdExpr(ArrayParser.IdExprContext ctx) {
     arrayTypeProperty.put(ctx, symbolTable.get(ctx.ID().getText()).getType());
   }
 
   @Override
-  public void exitInt(ArrayParser.IntContext ctx) {
+  public void exitIntExpr(ArrayParser.IntExprContext ctx) {
     arrayTypeProperty.put(ctx, new BasicTypeSymbol("int"));
   }
 
   @Override
   public void exitVarDecl(ArrayParser.VarDeclContext ctx) {
     String varName = ctx.ID().getText();
-    String typeName = ctx.type().getText();
+    String typeName = ctx.basicType().getText();
     Type type = new BasicTypeSymbol(typeName);
 
     symbolTable.put(varName, new VariableSymbol(varName, type));
@@ -90,7 +90,7 @@ public class TypeCheckingListener extends ArrayBaseListener {
 
   // type inference
   @Override
-  public void exitArrayIndex(ArrayParser.ArrayIndexContext ctx) {
+  public void exitArraySubscriptExpr(ArrayParser.ArraySubscriptExprContext ctx) {
     arrayTypeProperty.put(ctx,
         ((ArrayType) arrayTypeProperty.get(ctx.primary)).subType);
   }
@@ -102,6 +102,6 @@ public class TypeCheckingListener extends ArrayBaseListener {
   public void exitAssignStat(ArrayParser.AssignStatContext ctx) {
     Type lhs = arrayTypeProperty.get(ctx.lhs);
     Type rhs = arrayTypeProperty.get(ctx.rhs);
-    System.out.println(lhs + " : " + rhs);
+    System.out.println(lhs + " <=> " + rhs);
   }
 }

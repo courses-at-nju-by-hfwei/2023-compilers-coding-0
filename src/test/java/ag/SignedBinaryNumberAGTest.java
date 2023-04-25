@@ -11,21 +11,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-public class PostfixExprAGTest {
+public class SignedBinaryNumberAGTest {
   InputStream is = System.in;
 
   @BeforeMethod
   public void setUp() throws IOException {
-    is = new FileInputStream(Path.of("src/test/antlr/ag/postfix.txt").toFile());
+    is = new FileInputStream(Path.of("src/test/antlr/ag/binary.txt").toFile());
   }
 
   @Test
   public void testPostfixExprAG() throws IOException {
     CharStream input = CharStreams.fromStream(is);
-    PostfixExprAGLexer lexer = new PostfixExprAGLexer(input);
+    SignedBinaryNumberAGLexer lexer = new SignedBinaryNumberAGLexer(input);
     CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-    PostfixExprAGParser parser = new PostfixExprAGParser(tokens);
-    parser.stat();
+    SignedBinaryNumberAGParser parser = new SignedBinaryNumberAGParser(tokens);
+    parser.number();
   }
 }
