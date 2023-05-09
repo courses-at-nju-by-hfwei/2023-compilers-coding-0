@@ -138,15 +138,19 @@ public class CodeGenVisitor extends ControlBaseVisitor<String> {
 
     String trueLabel = getNewLabel("or.true");
     String falseLabel = getNewLabel("or.false");
+    String endLabel = getNewLabel("or.end");
     emit("br " + lhs + " " + trueLabel + " " + falseLabel);
 
     emitLabel(falseLabel);
     String rhs = visit(ctx.rhs);
     String temp = getNewTemp();
     emit(temp + " = OR " + lhs + " " + rhs);
+    emit("br " + endLabel);
 
     emitLabel(trueLabel);
     emit(temp + " = true");
+
+    emitLabel(endLabel);
     return temp;
   }
 
@@ -156,15 +160,19 @@ public class CodeGenVisitor extends ControlBaseVisitor<String> {
 
     String trueLabel = getNewLabel("and.true");
     String falseLabel = getNewLabel("and.false");
+    String endLabel = getNewLabel("and.end");
     emit("br " + lhs + " " + trueLabel + " " + falseLabel);
 
     emitLabel(trueLabel);
     String rhs = visit(ctx.rhs);
     String temp = getNewTemp();
     emit(temp + " = AND " + lhs + " " + rhs);
+    emit("br " + endLabel);
 
     emitLabel(falseLabel);
     emit(temp + " = false");
+
+    emitLabel(endLabel);
     return temp;
   }
 

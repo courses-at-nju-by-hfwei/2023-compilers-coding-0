@@ -6,19 +6,23 @@ br t3 and.true2 and.false3
 and.true2:
 t4 = false
 t5 = AND t3 t4
+br and.end4
 and.false3:
 t5 = false
-br t5 and.true4 and.false5
-and.true4:
+and.end4:
+br t5 and.true5 and.false6
+and.true5:
 t6 = true
 t7 = AND t5 t6
-and.false5:
+br and.end7
+and.false6:
 t7 = false
-br t7 b.true6 b.false7
-b.true6:
+and.end7:
+br t7 b.true8 b.false9
+b.true8:
 t8 = 1
 a = t8
 br begin1
-b.false7:
+b.false9:
 t9 = 2
 a = t9
