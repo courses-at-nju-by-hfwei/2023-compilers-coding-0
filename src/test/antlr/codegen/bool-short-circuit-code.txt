@@ -1,0 +1,24 @@
+begin1
+t1 = a
+t2 = b
+t3 = icmp sgt t1 t2
+br t3 and.true2 and.false3
+and.true2:
+t4 = false
+t5 = AND t3 t4
+and.false3:
+t5 = false
+br t5 and.true4 and.false5
+and.true4:
+t6 = true
+t7 = AND t5 t6
+and.false5:
+t7 = false
+br t7 b.true6 b.false7
+b.true6:
+t8 = 1
+a = t8
+br begin1
+b.false7:
+t9 = 2
+a = t9

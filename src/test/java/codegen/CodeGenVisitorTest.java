@@ -20,7 +20,8 @@ public class CodeGenVisitorTest {
 //    is = new FileInputStream(Path.of("src/test/antlr/codegen/bool.txt").toFile());
 //    is = new FileInputStream(Path.of("src/test/antlr/codegen/if.txt").toFile());
 //    is = new FileInputStream(Path.of("src/test/antlr/codegen/while.txt").toFile());
-    is = new FileInputStream(Path.of("src/test/antlr/codegen/break.txt").toFile());
+//    is = new FileInputStream(Path.of("src/test/antlr/codegen/break.txt").toFile());
+    is = new FileInputStream(Path.of("src/test/antlr/codegen/bool-short-circuit.txt").toFile());
   }
 
   @Test
@@ -35,7 +36,8 @@ public class CodeGenVisitorTest {
 //    CodeGenVisitor cg = new CodeGenVisitor("src/test/antlr/codegen/bool-code.txt");
 //    CodeGenVisitor cg = new CodeGenVisitor("src/test/antlr/codegen/if-code.txt");
 //    CodeGenVisitor cg = new CodeGenVisitor("src/test/antlr/codegen/while-code.txt");
-    CodeGenVisitor cg = new CodeGenVisitor("src/test/antlr/codegen/break-code.txt");
+//    CodeGenVisitor cg = new CodeGenVisitor("src/test/antlr/codegen/break-code.txt");
+    CodeGenVisitor cg = new CodeGenVisitor("src/test/antlr/codegen/bool-short-circuit-code.txt");
     cg.visit(tree);
   }
 }

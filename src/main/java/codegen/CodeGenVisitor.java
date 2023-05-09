@@ -1,6 +1,8 @@
 package codegen;
 
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -133,20 +135,36 @@ public class CodeGenVisitor extends ControlBaseVisitor<String> {
   @Override
   public String visitOrExpr(ControlParser.OrExprContext ctx) {
     String lhs = visit(ctx.lhs);
-    String rhs = visit(ctx.rhs);
 
+    String trueLabel = getNewLabel("or.true");
+    String falseLabel = getNewLabel("or.false");
+    emit("br " + lhs + " " + trueLabel + " " + falseLabel);
+
+    emitLabel(falseLabel);
+    String rhs = visit(ctx.rhs);
     String temp = getNewTemp();
     emit(temp + " = OR " + lhs + " " + rhs);
+
+    emitLabel(trueLabel);
+    emit(temp + " = true");
     return temp;
   }
 
   @Override
   public String visitAndExpr(ControlParser.AndExprContext ctx) {
     String lhs = visit(ctx.lhs);
-    String rhs = visit(ctx.rhs);
 
+    String trueLabel = getNewLabel("and.true");
+    String falseLabel = getNewLabel("and.false");
+    emit("br " + lhs + " " + trueLabel + " " + falseLabel);
+
+    emitLabel(trueLabel);
+    String rhs = visit(ctx.rhs);
     String temp = getNewTemp();
     emit(temp + " = AND " + lhs + " " + rhs);
+
+    emitLabel(falseLabel);
+    emit(temp + " = false");
     return temp;
   }
 
@@ -176,26 +194,6 @@ public class CodeGenVisitor extends ControlBaseVisitor<String> {
     String temp = getNewTemp();
     emit(temp + " = " + ctx.getText());
     return temp;
-  }
-
-  @Override
-  public String visitMultExpr(ControlParser.MultExprContext ctx) {
-    return super.visitMultExpr(ctx);
-  }
-
-  @Override
-  public String visitADDExpr(ControlParser.ADDExprContext ctx) {
-    return super.visitADDExpr(ctx);
-  }
-
-  @Override
-  public String visitNegExpr(ControlParser.NegExprContext ctx) {
-    return super.visitNegExpr(ctx);
-  }
-
-  @Override
-  public String visitParenExpr(ControlParser.ParenExprContext ctx) {
-    return super.visitParenExpr(ctx);
   }
 
   private void emitLabel(String label) {
