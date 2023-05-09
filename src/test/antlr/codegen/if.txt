@@ -1,0 +1,6 @@
+if (true && false && true || ! false && ! true || ! a >= 5 && a == b) {
+ a = b;
+ b = c;
+} else {
+  c = d;
+}

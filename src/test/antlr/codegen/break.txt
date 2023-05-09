@@ -1,0 +1,10 @@
+while (true) {
+  while (false) {
+    if (true) {
+      break;
+    }
+    a = 1;
+  }
+  a = 2;
+}
+a = 3;
