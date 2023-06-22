@@ -9,8 +9,8 @@ s : e ;
 e : e '!'
   | <assoc=right> e '^' e
   | e '+' e
-  | ID
+  | INT
   ;
 
-ID : [a-z]+ ;
+INT : [1-9]+ ;
 WS : [ \t\r\n]+ -> skip ;

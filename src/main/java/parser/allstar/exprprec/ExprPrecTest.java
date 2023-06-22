@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 public class ExprPrecTest {
   public static void main(String[] args) throws IOException {
@@ -43,7 +44,7 @@ public class ExprPrecTest {
     panel.add(viewer);
     frame.add(panel);
 
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     frame.setSize(800, 600);
     frame.setVisible(true);
   }
